@@ -1,0 +1,52 @@
+SETTINGS:
+  name: ib_write_bw
+
+VARS:
+  QPS: 1
+  MSG: 65535
+  BDIR: true
+  RDMA_DURATION: 10
+  NODE_FILTER: ""
+  IMMIDIATE: false
+  NUM_NODES: 2
+  HOSTS: ""
+  TOPOLOGY_TYPE: O2O_UNI
+  CLUSTER_NAME: ""
+  CONFIGURATION: ""
+  TAGS: ""
+  BENCHMARK: ""
+  NICS: ""
+  EXP_CUDA: 0
+  IPv6: false
+#  INTERFACE: '["enp99s0f0np0","enp225s0f0np0"]'
+
+
+ALIAS:
+  print_commands: jobs log_configuration --commands_info=true
+  node_filter : pairing_allocation pairing_rules node_selector --hosts={HOSTS} --nics={NICS} --num_hosts={NUM_NODES}
+                pairing_allocation pairing_topology {TOPOLOGY_TYPE}
+
+  job_tag : tagging --cluster_name={CLUSTER_NAME} --configuration={CONFIGURATION} --benchmark={BENCHMARK} --tags={TAGS}
+
+#  interface_filter: pairing_allocation pairing_rules field_filter --node_type=NetworkInterface --field_values={INTERFACE} --field_name=name
+#  ibdev_filter:  pairing_allocation pairing_rules group_by_field --node_type=NetworkInterface --field_name=name --should_be_equal=true
+#  host_filter: pairing_allocation pairing_rules group_by_field --node_type=host --should_be_equal=false --field_name=hostname
+#  pairing_topo: pairing_allocation pairing_topology {TOPOLOGY_TYPE}
+
+  rdma_bw:
+    node_filter: $node_filter
+    message_size: '{MSG}'
+    num_of_qps: '{QPS}'
+    duration: '{RDMA_DURATION}'
+    bidirectional: '{BDIR}'
+    write_with_imm: '{IMMIDIATE}'
+    ipv6: '{IPv6}'
+    CUDA: '{EXP_CUDA}'
+    alias: jobs rdma_perf --benchmark=ib_write_bw
+      --gid_index=3 --num_of_qps=$num_of_qps
+      --message_size=$message_size --duration=$duration --use_cuda_dmabuf=$CUDA --use_closest_gpu=$CUDA
+      --ipv6=false --taskset=true --bidirectional=$bidirectional --write_with_imm=$write_with_imm
+      $print_commands $node_filter
+
+JOBS:
+  - $rdma_bw $job_tag

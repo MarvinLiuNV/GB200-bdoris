@@ -1,0 +1,17 @@
+SETTINGS:
+  name: monitors
+  
+VARS:
+  INTERFACE: INTERFACE
+  MONITOR_INTERVAL: 1.0
+
+ALIAS:
+  monitors: ni_monitors --monitor monitor_network_interface --interval={MONITOR_INTERVAL}
+    pairing_allocation pairing_rules node_selector --nics={INTERFACE} scheduling --background=true
+    & nic_monitors --monitor monitor_linux_statistics --interval={MONITOR_INTERVAL}
+    pairing_allocation pairing_rules node_selector --nics={INTERFACE} scheduling --background=true
+    & host_monitors --monitor monitor_host_statistics --interval={MONITOR_INTERVAL}
+    pairing_allocation pairing_rules node_selector scheduling --background=true
+
+JOBS:
+- jobs $monitors

@@ -1,0 +1,14 @@
+workers:
+  - description: "l40s vRoCE testing"
+    executer: mtl-e2e-slurm03
+    hostname: clx-l40s-[08,11-12]
+    connection: ssh
+    user: root
+    password: 3tango
+    init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
+
+  - description: "SLURM machine"
+    hostname: mtl-e2e-slurm03
+    connection: ssh
+    worker_type: SLURM
+    init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
