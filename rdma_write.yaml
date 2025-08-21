@@ -16,15 +16,27 @@ VARS:
   TAGS: ""
   BENCHMARK: ""
   NICS: ""
-  EXP_CUDA: 0
-  IPv6: false
+  KEEP_NICS: ""
+  EXP_CUDA: true
+  IPv6: true
+  SLURM_PARTITION: ""
+  IP_TYPE: "IPv6"
+  VRF: true
+  CLIENTS: ""
+  SERVERS: ""
 #  INTERFACE: '["enp99s0f0np0","enp225s0f0np0"]'
 
 
 ALIAS:
+
   print_commands: jobs log_configuration --commands_info=true
   node_filter : pairing_allocation pairing_rules node_selector --hosts={HOSTS} --nics={NICS} --num_hosts={NUM_NODES}
                 pairing_allocation pairing_topology {TOPOLOGY_TYPE}
+  o2o_filter: pairing_allocation pairing_topology pairs_by_hostlist --clients={CLIENTS} --servers={SERVERS}
+
+  nics_filter: pairing_allocation pairing_rules group_by_field --node_type=NIC --should_be_equal=true --field_name=rdma_device
+  hosts_filter: pairing_allocation pairing_rules group_by_field --node_type=host --should_be_equal=false --field_name=hostname
+  keep_nics: pairing_allocation pairing_rules node_selector --nics={KEEP_NICS}
 
   job_tag : tagging --cluster_name={CLUSTER_NAME} --configuration={CONFIGURATION} --benchmark={BENCHMARK} --tags={TAGS}
 
@@ -34,19 +46,28 @@ ALIAS:
 #  pairing_topo: pairing_allocation pairing_topology {TOPOLOGY_TYPE}
 
   rdma_bw:
-    node_filter: $node_filter
+    node_filter: $o2o_filter
     message_size: '{MSG}'
     num_of_qps: '{QPS}'
     duration: '{RDMA_DURATION}'
     bidirectional: '{BDIR}'
     write_with_imm: '{IMMIDIATE}'
-    ipv6: '{IPv6}'
+    #ipv6: '{IPv6}'
+    #ip_type: '{IP_TYPE}'
     CUDA: '{EXP_CUDA}'
+    vrf: '{VRF}'
     alias: jobs rdma_perf --benchmark=ib_write_bw
       --gid_index=3 --num_of_qps=$num_of_qps
       --message_size=$message_size --duration=$duration --use_cuda_dmabuf=$CUDA --use_closest_gpu=$CUDA
-      --ipv6=false --taskset=true --bidirectional=$bidirectional --write_with_imm=$write_with_imm
-      $print_commands $node_filter
+      --ipv6=true --ip_type=IPv6
+      --bidirectional=$bidirectional --write_with_imm=$write_with_imm
+      --ip_vrf_exec=$vrf
+      $print_commands $node_filter $keep_nics $hosts_filter $nics_filter
+      #$print_commands $keep_nics $nics_filter $hosts_filter
+      #$print_commands $node_filter
+      #--ipv6=$ipv6 --ip_type=$ip_type
+
+  slurm_all_hosts id=1: jobs slurm_allocator --all_hosts=true --allocation_group_id=$id --partition={SLURM_PARTITION}
 
 JOBS:
-  - $rdma_bw $job_tag
+  - $rdma_bw $slurm_all_hosts $job_tag

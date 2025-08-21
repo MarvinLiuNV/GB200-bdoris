@@ -1,7 +1,7 @@
 workers:
   - description: "l40s vRoCE testing"
     executer: mtl-e2e-slurm03
-    hostname: clx-l40s-[08,11-12]
+    hostname: clx-l40s-[07-08,11-12]
     connection: ssh
     user: root
     password: 3tango

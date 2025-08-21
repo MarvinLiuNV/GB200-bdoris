@@ -1,0 +1,51 @@
+workers:
+
+  - description: "GOOGLE GB200 all hosts"
+#    executer: l-gb200-slurm01
+    executer: mngx-isr1-ctl-15
+#    hostname: gb-nvl-yok-03-compute0[1-9],gb-nvl-yok-04-compute0[1-9]
+    hostname: gb-nvl-yok-03-compute[03,07-09],gb-nvl-yok-04-compute[01-08]
+    connection: ssh
+    user: nvidia
+    password: nvidia
+    init_command: source /.autodirect/mswg2/E2E/V2/nlastic_arm/virtenvs/grpc_service/bin/activate
+
+#  - description: "GB200_Yok_switch"
+#    hostname: gb-nvl-yok-03-switch0[1-9],gb-nvl-yok-04-switch0[1-9]
+#    executer: clx-virt-01
+#    connection: ssh
+#    user: admin
+#    password: Juliet@1234
+#    init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
+
+  - description: "SLURM machine"
+#    hostname: l-gb200-slurm01
+    hostname: mngx-isr1-ctl-15
+    connection: ssh
+    worker_type: SLURM
+    init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
+
+#  - description: "GOOGLE GB200 leaf switches"
+#    hostname: mose-gbnvl-l[1-2]
+#    role: leaf
+#    user: cumulus
+#    password: 3Tango11!
+#    connection: ssh
+#    init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
+#
+#  - description: "GOOGLE GB200 spine switches"
+#    hostname: mose-gbnvl-s[1-2]
+#    role: spine
+#    user: cumulus
+#    password: 3Tango11!
+#    connection: ssh
+#    init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
+#
+#  - description: "GOOGLE GB200 super-spine switches"
+#    hostname: mose-gbnvl-c[1-2]
+#    role: super_spine
+#    user: cumulus
+#    password: 3Tango11!
+#    connection: ssh
+#    init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
+#
