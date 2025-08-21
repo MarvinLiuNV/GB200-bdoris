@@ -7,6 +7,8 @@ VARS:
   TAGS: ""
   BENCHMARK: ""
 
+  CUDA_VISIBLE_DEVICES: ""
+  NCCL_IB_HCA: ""
   INTERFACE: ""
   NCCL_EXP_BW: 10
 
@@ -16,8 +18,8 @@ VARS:
   SLURM_PARTITION: ""
   NCCL_SOCKET: ""
   MELLANOX_VISIBLE_DEVICES: ""
-  RACK_A: "clx-l40s-[07,08]"
-  RACK_B: "clx-l40s-[11,12]"
+  RACK_A: ""
+  RACK_B: ""
 
   NCCL_MNNVL_ENABLE: 0
 
