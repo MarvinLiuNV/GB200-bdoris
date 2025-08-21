@@ -11,11 +11,11 @@ VARS:
 
   SLURM_PARTITION: "L40S"
   NCCL_EXP_BW: 10
-  CONTAINER: "/mswg2/E2E/Regression_logs/squash/nccl_v2.24.3-1"
+  CONTAINER: ""
   NCCL_SOCKET: "enp3s0f0"
   MELLANOX_VISIBLE_DEVICES: "2,3"
-  CUDA_VISIBLE_DEVICES: 0,1,2,3
-  NCCL_IB_HCA: mlx5_2:1,mlx5_3:1
+  CUDA_VISIBLE_DEVICES: "0,1,2,3"
+  NCCL_IB_HCA: "mlx5_2:1,mlx5_3:1"
   NTASKS_PER_NODE: 4
   NUM_GPUS: 4
   NCCL_DEBUG: "warn"
@@ -37,8 +37,8 @@ ALIAS:
   nccl_job benchmark minbytes=16G maxbytes=16G n=10 f=2 g=1: jobs hpc nccl_tests --benchmark=$benchmark
             --minbytes=$minbytes --n=$n --f=$f --g=$g --w=50 --maxbytes=$maxbytes hpc_runner --runner=srun 
             jobs hpc hpc_configuration srun --MELLANOX_VISIBLE_DEVICES={MELLANOX_VISIBLE_DEVICES} --ntasks_per_node={NTASKS_PER_NODE} --container_image={CONTAINER} --num_gpus={NUM_GPUS} --partition={SLURM_PARTITION}
-            jobs hpc hpc_configuration cuda --CUDA_VISIBLE_DEVICES={CUDA_VISIBLE_DEVICES}
-            jobs hpc hpc_configuration nccl --NCCL_IB_GID_INDEX=3 --NCCL_IB_TC=96 --NCCL_SOCKET_IFNAME={NCCL_SOCKET} --NCCL_IB_HCA={NCCL_IB_HCA} --NCCL_DEBUG=warn --NCCL_NET_PLUGIN=none
+            jobs hpc hpc_configuration cuda --CUDA_VISIBLE_DEVICES={CUDA_VISIBLE_DEVICES} ucx --UCX_NET_DEVICES={NCCL_SOCKET}
+            jobs hpc hpc_configuration nccl --NCCL_SOCKET_IFNAME={NCCL_SOCKET} --NCCL_IB_GID_INDEX=3 --NCCL_IB_TC=96 --NCCL_IB_HCA={NCCL_IB_HCA} --NCCL_DEBUG=warn --NCCL_NET_PLUGIN=none
 
 #      jobs hpc hpc_configuration srun --container_image={CONTAINER} --rm=pyt_init.store cuda nccl --UCX_SOCKET_IFNAME={UCX_SOCKET_IFNAME}
 #    --NCCL_IB_ADAPTIVE_ROUTING=1 --NCCL_IB_GID_INDEX=3 --NCCL_IB_TC=96 
