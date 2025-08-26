@@ -59,13 +59,8 @@ ALIAS:
     alias: jobs rdma_perf --benchmark=ib_write_bw
       --gid_index=3 --num_of_qps=$num_of_qps
       --message_size=$message_size --duration=$duration --use_cuda_dmabuf=$CUDA --use_closest_gpu=$CUDA
-      --ipv6=true --ip_type=IPv6
       --bidirectional=$bidirectional --write_with_imm=$write_with_imm
-      --ip_vrf_exec=$vrf
       $print_commands $node_filter $keep_nics $hosts_filter $nics_filter
-      #$print_commands $keep_nics $nics_filter $hosts_filter
-      #$print_commands $node_filter
-      #--ipv6=$ipv6 --ip_type=$ip_type
 
   slurm_all_hosts id=1: jobs slurm_allocator --all_hosts=true --allocation_group_id=$id --partition={SLURM_PARTITION}
 

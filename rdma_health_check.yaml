@@ -23,9 +23,9 @@ VARS:
 #  BDIR: ?P3[true,false]
 #  IMMIDIATE: ?P4[true,false]
 
-  QPS: 1
+  QPS: 4
   MSG: 65536
-  BDIR: false
+  BDIR: true
   IMMIDIATE: false
   IPv6: false
   EXP_CUDA: false

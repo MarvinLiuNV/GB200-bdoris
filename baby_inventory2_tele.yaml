@@ -1,0 +1,68 @@
+workers:
+
+  - description: "GB200_computes"
+    hostname: gb-blyris-[09-10,35-36]
+    executer: mngx-blyris-slurm-login-01
+    connection: ssh
+    user: root
+    password: 3tango
+    init_command: source /mswg2/E2E/V2/nlastic_arm/virtenvs/grpc_service/bin/activate
+
+  - description: "GB200_Juliet_switches"
+    hostname: gb-blyris-sw-[01-09]
+    executer: gb-blyris-02
+    connection: ssh
+    user: admin
+    password: Juliet@1234
+
+  - description: "E/W switches baby-lyris"
+    hostname: "bm-blyris-l[1-2],bm-blyris-s[1-2]"
+    executer: gb-blyris-02
+    connection: ssh
+    user: admin
+    password: 3Tango11!
+    init_command: source /mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
+
+  - description: "UFM baby-lyris"
+    hostname: ufmx-blyris-01
+    executer: gb-blyris-02   
+    connection: ssh
+    user: root
+    password: 3tango11
+    worker_type: UFM_APPLIANCE
+    init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
+
+  - description: "SLURM machine"
+    hostname: mngx-blyris-slurm-login-01
+    connection: ssh
+    worker_type: SLURM
+#    user: urim
+#    password: urim11
+    user: root
+    password: 3tango    
+    init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate 
+
+
+# workers:
+
+#   - description: "switches baby-lyris"
+#     hostname: 
+#     executer: 
+#     connection: http
+#     user: admin
+#     password: admin
+#     init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
+#   - description: "servers baby-lyris"
+#     hostname: "gb-blyris-[01-18]"
+#     connection: ssh
+#     user: nvidia
+#     password: nvidia 
+#     init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate
+#   - description: "UFM baby-lyris"
+#     hostname: 
+#     executer: 
+#     connection: async_ssh
+#     user: root
+#     password: 3tango11
+#     worker_type: UFM_APPLIANCE
+#     init_command: source /.autodirect/mswg2/E2E/V2/nlastic/virtenvs/grpc_service/bin/activate

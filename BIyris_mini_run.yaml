@@ -2,32 +2,34 @@ SETTINGS:
   name: GB200
 
 VARS:
-  CLUSTER_NAME: "GLODA"
-  CONFIGURATION: "RDMA_BF3_MINI_RUN_NICFW_32_42_1000_DOCA_086000"
+  CLUSTER_NAME: "GB200_Babylyris_EW_Tanios"
+  CONFIGURATION: "1.0_rc12_26March_EW_RDMA_Rack2"
   #CONFIGURATION: "new_RDMA_CX8_MINI_RUN_NICFW_45_5014_DOCA_058452_MRC_0177_GPU_RC_33"
-  TAGS: "REL2A_MINI_Regression"
+  TAGS: "Rack_2_GB200_36x1"
 
-  INTERFACE: roce_rail1,roce_rail2,roce_rail3,roce_rail4
-  NICS: roce_rail1,roce_rail2,roce_rail3,roce_rail4
+#  INTERFACE: ibp3s0,ibP2p3s0,ibP16p3s0,ibP18p3s0
+  INTERFACE: mlx5_0,mlx5_1,mlx5_2,mlx5_3
+  NICS: ibp3s0,ibP2p3s0,ibP16p3s0,ibP18p3s0
 
 #  RACK_A: "gb-nvl-yok-03-compute[07-08]"
-  RACK_A: "gb-nvl-yok-03-compute[03]"
-  RACK_B: "gb-nvl-yok-03-compute[08]"
-  SERVERS: "gb-nvl-yok-03-compute[07-08]"
-  CLIENTS: "gb-nvl-yok-04-compute[07-08]"
-  SLURM_PARTITION: "gb200-golda"
+  RACK_A: "gb-blyris-[09,10]"
+  RACK_B: "gb-blyris-[35,36]"
+  SERVERS: "gb-blyris-[09,10]"
+  CLIENTS: "gb-blyris-[35,36]"
+  SLURM_PARTITION: "gb200-blyris"
 
   NODE_EXP_BW: 390
   RACK_EXP_BW: 390
   NO_MNNVL_EXP_BW: 390
   NO_NVLINK_EXP_BW: 55
 
-  CONTAINER: "/mnt/lustre/cloudai/cloudai_1.1/install/nvcr.io_nvidia__pytorch__25.02-py3.sqsh"
+  CONTAINER: "/mnt/lustre/cloudaix/cloudaix/install/gitlab-master.nvidia.com_nbu-swx_hpc_hpcx__nemo__25.07-hpcx-v2.24.1-gcc-inbox-ubuntu24.04-cuda13-aarch64-tp1.sqsh"
   NCCL_SOCKET: "enP5p9s0"
-  MELLANOX_VISIBLE_DEVICES: 0,1,4,5
+  MELLANOX_VISIBLE_DEVICES: 0,1,2,3
   CUDA_VISIBLE_DEVICES: 0,1,2,3
-  NCCL_IB_HCA: mlx5_0:1,mlx5_1:1,mlx5_4:1,mlx5_5:1
-  KEEP_NICS: 'roce_rail[1-4]'
+  NCCL_IB_HCA: mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_3:1
+  KEEP_NICS: 'mlx5_0:1,mlx5_1:1,mlx5_2:1,mlx5_3:1'
+  RDMA_NICS: 'mlx5_[0,1,2,3]'
   NTASKS_PER_NODE: 4
   NUM_GPUS: 4
 
