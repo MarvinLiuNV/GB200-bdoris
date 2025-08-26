@@ -5,7 +5,7 @@ VARS:
   CLUSTER_NAME: ""
   CONFIGURATION: ""
   TAGS: ""
-  BENCHMARK: ""
+  BENCHMARK: "NCCL_All_To_All_No_NVLINK_Rack_Health_Check"
 
   CUDA_VISIBLE_DEVICES: ""
   NCCL_IB_HCA: ""
