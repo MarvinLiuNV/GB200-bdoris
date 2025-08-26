@@ -40,11 +40,6 @@ ALIAS:
 
   job_tag : tagging --cluster_name={CLUSTER_NAME} --configuration={CONFIGURATION} --benchmark={BENCHMARK} --tags={TAGS}
 
-#  interface_filter: pairing_allocation pairing_rules field_filter --node_type=NetworkInterface --field_values={INTERFACE} --field_name=name
-#  ibdev_filter:  pairing_allocation pairing_rules group_by_field --node_type=NetworkInterface --field_name=name --should_be_equal=true
-#  host_filter: pairing_allocation pairing_rules group_by_field --node_type=host --should_be_equal=false --field_name=hostname
-#  pairing_topo: pairing_allocation pairing_topology {TOPOLOGY_TYPE}
-
   rdma_bw:
     node_filter: $o2o_filter
     message_size: '{MSG}'
