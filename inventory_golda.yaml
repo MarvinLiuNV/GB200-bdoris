@@ -3,8 +3,8 @@ workers:
   - description: "GOOGLE GB200 all hosts"
 #    executer: l-gb200-slurm01
     executer: mngx-isr1-ctl-15
-#    hostname: gb-nvl-yok-03-compute0[1-9],gb-nvl-yok-04-compute0[1-9]
-    hostname: gb-nvl-yok-03-compute[03,07-09],gb-nvl-yok-04-compute[01-08]
+    hostname: gb-nvl-yok-03-compute0[3,8]
+#    hostname: gb-nvl-yok-03-compute[03,07-09],gb-nvl-yok-04-compute[01-08]
     connection: ssh
     user: nvidia
     password: nvidia
